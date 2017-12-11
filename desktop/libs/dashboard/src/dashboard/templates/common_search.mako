@@ -1640,7 +1640,6 @@ ${ dashboard.layout_skeleton(suffix='search') }
 </script>
 
 
-## WIP skeleton
 <script type="text/html" id="document-widget">
   ##<div class="widget-spinner" data-bind="visible: isLoading()">
   ##  <i class="fa fa-spinner fa-spin"></i>
@@ -1651,11 +1650,14 @@ ${ dashboard.layout_skeleton(suffix='search') }
 
     <!-- ko with: $root.collection.getFacetById($parent.id()) -->
     <div>
-      Name Uuid
+
+      <input type="text" class="input-medium" data-bind="value: properties.engine"/>
+      <textarea data-bind="value: properties.statement"><textarea/>
 
       ## Get sub widget by ID
       ## <div data-bind="template: { name: function() { return widgetType(); }}" class="widget-main-section"></div>
 
+      <span data-bind="template: { name: 'data-grid' }"></span>
     </div>
    <!-- /ko -->
   </div>
@@ -4064,7 +4066,7 @@ $(document).ready(function () {
       selectedWidget = widget;
       selectedRow = row;
 
-      if (searchViewModel.collection.template.availableWidgetFields().length == 1){
+      if (searchViewModel.collection.template.availableWidgetFields().length == 1 || widget.widgetType() == 'document-widget'){
         addFacetDemiModalFieldPreview(searchViewModel.collection.template.availableWidgetFields()[0]);
       }
       else {
