@@ -149,7 +149,7 @@ def login_begin(request, template_name='openid/login.html',
                 render_failure=default_render_failure,
                 redirect_field_name=REDIRECT_FIELD_NAME):
     """Begin an OpenID login request, possibly asking for an identity URL."""
-    redirect_to = request.REQUEST.get(redirect_field_name, '')
+    redirect_to = request.GET.get(redirect_field_name, '')
 
     # Get the OpenID URL to try.  First see if we've been configured
     # to use a fixed server URL.
@@ -256,7 +256,7 @@ def login_begin(request, template_name='openid/login.html',
 @csrf_exempt
 def login_complete(request, redirect_field_name=REDIRECT_FIELD_NAME,
                    render_failure=None):
-    redirect_to = request.REQUEST.get(redirect_field_name, '')
+    redirect_to = request.GET.get(redirect_field_name, '')
     render_failure = render_failure or \
                      getattr(settings, 'OPENID_RENDER_FAILURE', None) or \
                      default_render_failure

@@ -429,7 +429,7 @@ def log_frontend_event(request):
   "error", or "critical"), and "message".
   """
   def get(param, default=None):
-    return request.REQUEST.get(param, default)
+    return request.GET.get(param, default)
 
   level = _LOG_LEVELS.get(get("level"), logging.INFO)
   msg = "Untrusted log event from user %s: %s" % (
@@ -476,7 +476,7 @@ def commonheader(title, section, user, request=None, padding="90px", skip_topbar
 
 def get_banner_message(request):
   banner_message = None
-  forwarded_host = request.META.get('HTTP_X_FORWARDED_HOST')
+  forwarded_host = request.META.get('HTTP_X_FORWARDED_HOST', '')
 
   message = None;
   path_info = request.environ.get("PATH_INFO")
