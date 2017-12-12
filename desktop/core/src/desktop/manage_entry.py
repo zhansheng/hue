@@ -36,17 +36,16 @@ def entry():
   _deprecation_check(sys.argv[0])
 
   from django.core.exceptions import ImproperlyConfigured
-  from django.core.management import execute_from_command_line, find_commands
-  from django.core.management import LaxOptionParser
-  from django.core.management.base import BaseCommand
+  from django.core.management import execute_from_command_line
 
   os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'desktop.settings')
+  execute_from_command_line(sys.argv)
 
   # What's the subcommand being run?
   # This code uses the same logic from django.core.management to handle command args
   argv = sys.argv[:]
-  parser = LaxOptionParser(option_list=BaseCommand.option_list)
-  parser.parse_args(argv)
+  # parser = LaxOptionParser(option_list=BaseCommand.option_list)
+  # parser.parse_args(argv)
 
   if len(argv) > 1:
     prof_id = subcommand = argv[1]
