@@ -476,11 +476,15 @@ def commonheader(title, section, user, request=None, padding="90px", skip_topbar
 
 def get_banner_message(request):
   banner_message = None
-  forwarded_host = request.META.get('HTTP_X_FORWARDED_HOST', '')
+  forwarded_host = None
+  if request:
+    forwarded_host = request.get_host()
 
-  message = None;
-  path_info = request.environ.get("PATH_INFO")
-  if IS_HUE_4.get() and path_info.find("/hue/") < 0 and path_info.find("accounts/login") < 0:
+  message = None
+  path_info = None
+  if request:
+    path_info = request.get_full_path()
+  if IS_HUE_4.get() and path_info and (path_info.find("/hue/") < 0 and path_info.find("accounts/login") < 0):
     url = request.build_absolute_uri("/hue")
     link = '<a href="%s" style="color: #FFF; font-weight: bold">%s</a>' % (url, url)
     message = _('You are accessing an older version of Hue, please switch to the latest version: %s.') % link
